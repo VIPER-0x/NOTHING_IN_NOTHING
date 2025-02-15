@@ -1,0 +1,54 @@
+using System;  
+
+class LongDivision  
+{  
+    static void Main()  
+    {  
+        // Sample mock data for testing  
+        int dividend = 2983;  
+        int divisor = 11;  
+        LongDivisionProcess(dividend, divisor);  
+
+        // Additional test cases  
+        LongDivisionProcess(98765, 432);  
+        LongDivisionProcess(1000, 10);  
+        LongDivisionProcess(0, 5);  
+        LongDivisionProcess(5, 0); // This should trigger the division by zero error handling  
+    }  
+
+    static void LongDivisionProcess(int dividend, int divisor)  
+    {  
+        if (divisor == 0)  
+        {  
+            Console.WriteLine("Error: Division by zero is not allowed.");  
+            return;  
+        }  
+
+        // Replace division with A / B = A * B^-1  
+        double reciprocal = 1.0 / divisor;  
+        double quotient = dividend * reciprocal;  
+        int remainder = dividend % divisor;  
+
+        Console.WriteLine($"Dividend: {dividend}, Divisor: {divisor}");  
+        Console.WriteLine($"Quotient: {quotient}, Remainder: {remainder}");  
+        Console.WriteLine("Long Division Process:");  
+
+        string dividendStr = dividend.ToString();  
+        int currentDividend = 0;  
+        double currentQuotient = 0;  
+
+        for (int i = 0; i < dividendStr.Length; i++)  
+        {  
+            currentDividend = currentDividend * 10 + (dividendStr[i] - '0');  
+            currentQuotient = currentDividend * reciprocal; // Using reciprocal instead of division  
+            int currentRemainder = currentDividend % divisor;  
+
+            Console.WriteLine($"Step {i + 1}:");  
+            Console.WriteLine($"Current Dividend: {currentDividend}");  
+            Console.WriteLine($"Current Quotient: {currentQuotient}");  
+            Console.WriteLine($"Current Remainder: {currentRemainder}");  
+
+            currentDividend = currentRemainder;  
+        }  
+    }  
+}
