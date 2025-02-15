@@ -1,0 +1,56 @@
+using System;  
+
+class LongDivision  
+{  
+    static void Main()  
+    {  
+        // نمونه‌ای از داده‌های تست  
+        int dividend = 2983;  
+        int divisor = 11;  
+        LongDivisionProcess(dividend, divisor);  
+
+        // تست‌های اضافی  
+        LongDivisionProcess(98765, 432);  
+        LongDivisionProcess(1000, 10);  
+        LongDivisionProcess(0, 5);  
+        LongDivisionProcess(5, 0); // این تست تقسیم بر صفر را بررسی می‌کند  
+    }  
+
+    static void LongDivisionProcess(int dividend, int divisor)  
+    {  
+        if (divisor == 0)  
+        {  
+            Console.WriteLine("از نظر ریاضی، تقسیم بر صفر تعریف نشده است.");  
+            Console.WriteLine("از نظر فلسفی، هیچ چیزی برای تقسیم به هیچ (فضای خالی) وجود ندارد.");  
+            Console.WriteLine("از نظر عملی، این یک عمل نامعتبر است.");  
+            return;  
+        }  
+
+        // جایگزینی تقسیم با A / B = A * B^-1  
+        double reciprocal = 1.0 / divisor;  
+        double quotient = dividend * reciprocal;  
+        int remainder = dividend % divisor;  
+
+        Console.WriteLine($"مقسوم: {dividend}, مقسوم‌علیه: {divisor}");  
+        Console.WriteLine($"خارج قسمت: {quotient}, باقی‌مانده: {remainder}");  
+        Console.WriteLine("فرآیند تقسیم طولانی:");  
+
+        string dividendStr = dividend.ToString();  
+        int currentDividend = 0;  
+        double currentQuotient = 0;  
+
+        for (int i = 0; i < dividendStr.Length; i++)  
+        {  
+            currentDividend = currentDividend * 10 + (dividendStr[i] - '0');  
+            currentQuotient = currentDividend * reciprocal; // استفاده از معکوس به جای تقسیم  
+            int currentRemainder = currentDividend % divisor;  
+
+            Console.WriteLine($"مرحله {i + 1}:");  
+            Console.WriteLine($"مقسوم فعلی: {currentDividend}");  
+            Console.WriteLine($"خارج قسمت فعلی: {currentQuotient}");  
+            Console.WriteLine($"باقی‌مانده فعلی: {currentRemainder}");  
+
+            currentDividend = currentRemainder;  
+        }  
+    }  
+}
